@@ -1,0 +1,98 @@
+/* Global styles */
+.app {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.light {
+  background-color: #f4f4f4;
+  color: black;
+}
+
+.dark {
+  background-color: #121212;
+  color: white;
+}
+
+.editor-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns */
+  grid-template-rows: auto auto;  /* 2 rows */
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Upper row (Editor boxes) */
+.editor-box {
+  margin: 10px;
+}
+
+.editor {
+  width: 100%;
+  height: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 14px;
+  border: 1px solid #ddd;
+}
+
+.editor.dark {
+  background-color: #333;
+  color: white;
+}
+
+.editor.light {
+  background-color: white;
+  color: black;
+}
+
+/* Lower row (Output and buttons) */
+.output {
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ddd;
+  background-color: white; /* Always white, even in dark mode */
+}
+
+.output.dark {
+  background-color: white; /* Keep output white in dark mode */
+}
+
+.output.light {
+  background-color: white; /* Keep output white in light mode */
+}
+
+/* Button container for Run, Download, Clear */
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Dark Mode Button */
+.theme-toggle {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.theme-toggle:hover {
+  background-color: #555;
+}

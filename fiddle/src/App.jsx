@@ -1,35 +1,23 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import ResetPassword from './components/ResetPassword';
+import Home from './components/Home';
+import SignUp from './components/Signup'; // Import SignUp component
 
 const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
   const [js, setJs] = useState('');
   const [srcDoc, setSrcDoc] = useState('');
-  const [error, setError] = useState('');
 
-  useEffect(() => {
-    const savedHtml = localStorage.getItem('html');
-    const savedCss = localStorage.getItem('css');
-    const savedJs = localStorage.getItem('js');
-
-    if (savedHtml || savedCss || savedJs) {
-      setHtml(savedHtml || '');
-      setCss(savedCss || '');
-      setJs(savedJs || '');
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('html', html);
-    localStorage.setItem('css', css);
-    localStorage.setItem('js', js);
-  }, [html, css, js]);
+  const toggleTheme = () => {
+    setDarkMode(prevMode => !prevMode);
+  };
 
   const runCode = () => {
     const source = `
@@ -44,13 +32,10 @@ const App = () => {
       </html>
     `;
     setSrcDoc(source);
-    setError('');
   };
 
   const downloadCode = () => {
-    const blob = new Blob([
-      `<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}</script></body></html>`
-    ], { type: 'text/html' });
+    const blob = new Blob([`<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}</script></body></html>`], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -62,40 +47,33 @@ const App = () => {
     setHtml('');
     setCss('');
     setJs('');
+    setSrcDoc('');
   };
 
   return (
-    <div className="app">
-      <Navbar />
-      <div className="editor-container">
-        <textarea
-          placeholder="HTML"
-          value={html}
-          onChange={(e) => setHtml(e.target.value)}
+    <Router>
+      <div className={`app ${darkMode ? 'dark' : 'light'}`}>
+        {/* Navbar with theme toggle */}
+        <Navbar
+          runCode={runCode}
+          downloadCode={downloadCode}
+          clearCode={clearCode}
+          toggleTheme={toggleTheme}
+          darkMode={darkMode}
         />
-        <textarea
-          placeholder="CSS"
-          value={css}
-          onChange={(e) => setCss(e.target.value)}
-        />
-        <textarea
-          placeholder="JavaScript"
-          value={js}
-          onChange={(e) => setJs(e.target.value)}
-        />
+
+        <Routes>
+          {/* Define routes here */}
+          <Route path="/" element={<Home html={html} setHtml={setHtml} css={css} setCss={setCss} js={js} setJs={setJs} srcDoc={srcDoc} darkMode={darkMode} />} />  {/* Home page */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/signup" element={<SignUp />} />  {/* Corrected route for SignUp */}
+        </Routes>
+
+        {/* Footer */}
+        <Footer />
       </div>
-      <div className="actions">
-        <button onClick={runCode}>Run</button>
-        <button onClick={downloadCode}>Download</button>
-        <button onClick={clearCode}>Clear</button>
-      </div>
-      <iframe
-        srcDoc={srcDoc}
-        title="Output"
-        className="output"
-      />
-      <Footer />
-    </div>
+    </Router>
   );
 };
 
