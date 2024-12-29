@@ -1,60 +1,87 @@
-import React from 'react';
-import ThemeToggle from './ThemeToggle';
-import logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
+import Home from "./Home";
+import "./Login.css";
 
-const Navbar = ({ runCode, downloadCode, clearCode, toggleTheme, darkMode }) => {
+const Login = () => {
+  const formRef = useRef(null);
+  const navigate = useNavigate();
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  const handleOutsideClick = (e) => {
+    if (formRef.current && !formRef.current.contains(e.target)) {
+      navigate("/"); // Redirect to the home page
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (captchaVerified) {
+      alert("Logged in successfully!");
+      // Add login logic here
+    } else {
+      alert("Please complete the reCAPTCHA verification.");
+    }
+  };
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaVerified(!!value); // Check if the value is not null or empty
+  };
+
   return (
-    <div>
-      <nav className={`bg-white border-gray-200 dark:bg-gray-900`}>
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src={logo} className="h-9 mr-3" alt="Logo" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              JsCompiler
-            </span>
-          </a>
+    <div className="login-page">
+      {/* Render Home component in the background */}
+      <Home />
+      <div className="overlay" onClick={handleOutsideClick}>
+        <div className="login-form" ref={formRef}>
+          <h2>Login</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Email / Phone Number"
+              required
+              className="form-input"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              className="form-input"
+            />
+            <div className="form-options">
+              <label>
+                <input type="checkbox" />
+                Remember Me
+              </label>
+            </div>
 
-          <div className="flex items-center space-x-4">
-            {/* Action buttons for Run, Download, Clear */}
-            <button
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              onClick={runCode}
-            >
-              Run
-            </button>
-            <button
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-              onClick={downloadCode}
-            >
-              Download
-            </button>
-            <button
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-              onClick={clearCode}
-            >
-              Clear
-            </button>
+            {/* Google reCAPTCHA */}
+            <div className="recaptcha-container">
+              <ReCAPTCHA
+                sitekey="YOUR_RECAPTCHA_SITE_KEY" // Replace with your site key from Google reCAPTCHA
+                onChange={handleCaptchaChange}
+              />
+            </div>
 
-            {/* Theme Toggle */}
-            <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
-
-            {/* Login and Sign Up */}
             <button
-              className="px-4 py-2 border border-gray-500 text-gray-800 rounded hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+              type="submit"
+              className="submit-button"
+              disabled={!captchaVerified} // Disable button until reCAPTCHA is verified
             >
               Login
             </button>
-            <button
-              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-            >
-              <Link to="/signup">Signup</Link>
-            </button>
+          </form>
+          <div className="form-links">
+            <a href="/forgot-password">Forgot Password?</a>
+            <p>
+              Don't have an account? <a href="/signup">Sign up</a>
+            </p>
           </div>
         </div>
-      </nav>
+      </div>
     </div>
   );
 };
 
-export default Navbar;
+export default Login;
