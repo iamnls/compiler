@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css"
+import Home from "./Home";
 
 
 const SignUp=() => {
@@ -21,6 +22,7 @@ const SignUp=() => {
 
   return (
     <div className="signup-page">
+      <Home />
       {/* Render Home component in the background */}
       
       <div className="overlay" onClick={handleOutsideClick}>

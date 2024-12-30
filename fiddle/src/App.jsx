@@ -4,9 +4,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
-import ResetPassword from './components/ResetPassword';
+import ResetPassword from './components/ForgotPassword';
 import Home from './components/Home';
 import SignUp from './components/Signup'; // Import SignUp component
+import ForgotPassword from './components/ForgotPassword';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -67,7 +68,7 @@ const App = () => {
           {/* Define routes here */}
           <Route path="/" element={<Home html={html} setHtml={setHtml} css={css} setCss={setCss} js={js} setJs={setJs} srcDoc={srcDoc} darkMode={darkMode} />} />  {/* Home page */}
           <Route path="/login" element={<Login />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/signup" element={<SignUp />} />  {/* Corrected route for SignUp */}
         </Routes>
 
