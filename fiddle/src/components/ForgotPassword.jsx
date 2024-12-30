@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Home from "./Home" // Import Home component to display as background
 import "./ForgotPassword.css";  // Import the CSS file for styling
 
-const ForgotPasswordForm = () => {
+const ForgotPassword = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();
 
@@ -48,4 +48,4 @@ const ForgotPasswordForm = () => {
   );
 };
 
-export default ForgotPasswordForm;
+export default ForgotPassword;

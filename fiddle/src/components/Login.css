@@ -1,91 +1,99 @@
-/* Full-screen overlay */
+/* Basic reset and layout */
+
+
+.login-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+
+  justify-content: center;
+  align-items: center;
+}
+
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-  }
-  
-  /* Login Page Wrapper */
-  .login-page {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  /* Login Form */
-  .login-form {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    z-index: 20;
-  }
-  
-  .login-form h2 {
-    margin-bottom: 1.5rem;
-    color: #f55f55;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 0.8rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .recaptcha-container {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .remember-me {
-    margin: 1rem 0;
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-  }
-  
-  .captcha label,
-  .remember-me label {
-    margin-left: 0.5rem;
-  }
-  
-  .login-button {
-    width: 100%;
-    padding: 0.8rem;
-    background: #f55f55;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 1rem;
-  }
-  
-  .login-button:hover {
-    background: #d14e4e;
-  }
-  
-  .form-links {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .form-links a {
-    color: #f55f55;
-    text-decoration: underline;
-  }
-  
+  position: fixed; /* Use fixed positioning to cover the full screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-options {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.form-options label {
+  font-size: 14px;
+  color: #555;
+}
+
+.recaptcha-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #F55F55; /* Set button color */
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:disabled {
+  background-color: #F55F55;
+}
+
+.submit-button:hover {
+  background-color: #F55F55; /* No color change on hover */
+}
+
+.form-links {
+  text-align: center;
+  font-size: 14px;
+}
+
+.form-links a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.form-links a:hover {
+  text-decoration: underline;
+}
