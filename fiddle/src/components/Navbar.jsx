@@ -1,9 +1,18 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { useAuth } from '../AuthContext/AuthContext'; // Assuming the useAuth hook is used for authentication
 
 const Navbar = ({ runCode, downloadCode, clearCode, toggleTheme, darkMode }) => {
+  const { authState, logout } = useAuth(); // Get authState and logout function
+  const navigate = useNavigate(); // To redirect after logout
+
+  const handleLogout = () => {
+    logout();
+    navigate('/'); // Redirect to home page after logout
+  };
+
   const downloadFile = (fileName, content) => {
     const blob = new Blob([content], { type: 'text/plain' });
     const link = document.createElement('a');
@@ -69,19 +78,19 @@ const Navbar = ({ runCode, downloadCode, clearCode, toggleTheme, darkMode }) => 
           <div className="flex items-center space-x-4">
             {/* Action buttons for Run, Download, Clear */}
             <button
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:bg-black"
               onClick={runCode}
             >
               Run
             </button>
             <button
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              className="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:bg-black"
               onClick={downloadCodeFiles} // Updated to call downloadCodeFiles
             >
               Download
             </button>
             <button
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              className="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:bg-black"
               onClick={clearCode}
             >
               Clear
@@ -90,17 +99,28 @@ const Navbar = ({ runCode, downloadCode, clearCode, toggleTheme, darkMode }) => 
             {/* Theme Toggle */}
             <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
 
-            {/* Login and Sign Up */}
-            <button
-              className="px-4 py-2 border border-gray-500 text-gray-800 rounded hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-            >
-              <Link to="/login">Login</Link>
-            </button>
-            <button
-              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-            >
-              <Link to="/signup">Signup</Link>
-            </button>
+            {/* Conditional rendering of Login/SignUp or Logout */}
+            {authState.isAuthenticated ? (
+              <button
+                className="px-4 py-2px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:bg-black"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <button
+                  className="px-4 py-2px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:bg-black"
+                >
+                  <Link to="/login">Login</Link>
+                </button>
+                <button
+                  className="px-4 py-2px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 dark:bg-black"
+                >
+                  <Link to="/signup">Signup</Link>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </nav>

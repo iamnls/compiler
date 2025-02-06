@@ -5,8 +5,9 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
-import SignUp from './components/Signup'; // Import SignUp component
 import ForgotPassword from './components/ForgotPassword';
+import { AuthProvider } from './AuthContext/AuthContext';
+import SignUp from './components/SignUp';
 
 
 
@@ -53,6 +54,7 @@ const App = () => {
   };
 
   return (
+    <AuthProvider>
     <Router>
       <div className={`app ${darkMode ? 'dark' : 'light'}`}>
         {/* Navbar with theme toggle */}
@@ -70,13 +72,14 @@ const App = () => {
           <Route path="/" element={<Home html={html} setHtml={setHtml} css={css} setCss={setCss} js={js} setJs={setJs} srcDoc={srcDoc} darkMode={darkMode} />} />  {/* Home page */}
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/signup" element={<SignUp />} />  {/* Corrected route for SignUp */}
+          <Route path="/signup" element={<SignUp/>} />  {/* Corrected route for SignUp */}
         </Routes>
 
         {/* Footer */}
         <Footer />
       </div>
     </Router>
+    </AuthProvider>
   );
 };
 

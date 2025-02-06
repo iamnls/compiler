@@ -1,79 +1,88 @@
-.signup-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: rgba(255, 165, 0, 0.9);
+/* Overlay Styling */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Signup Form */
+.signup-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+}
+
+/* Fade-in Animation */
+.animate-popup {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Form Inputs */
+.form-input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.submit-button:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
   .signup-form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    text-align: center;
+    width: 95%;
+    padding: 1.5rem;
   }
-  
-  .form-title {
-    color: #ff4500;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-  }
-  
-  .form-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .signup-form input,
-  .signup-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .terms-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-  }
-  
-  .terms-group input {
-    margin-right: 10px;
-  }
-  
-  .terms-group a {
-    color: #ff4500;
-    text-decoration: none;
-  }
-  
-  .submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #e24405;
-  }
-  
-  .login-link {
-    margin-top: 15px;
-    font-size: 0.9rem;
-  }
-  
-  .login-link a {
-    color: #ff4500;
-    text-decoration: none;
-  }
-  
+}

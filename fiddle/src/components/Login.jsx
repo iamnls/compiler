@@ -1,74 +1,94 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ReCAPTCHA from "react-google-recaptcha";
-import Home from "./Home";
+import axios from "axios";
+import { useAuth } from '../AuthContext/AuthContext'; // Import the useAuth hook
 import "./Login.css";
+import Home from "./Home";
 
 const Login = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();
-  const [captchaVerified, setCaptchaVerified] = useState(false);
+  const { login } = useAuth();  // Get login function from context
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleOutsideClick = (e) => {
-    if (formRef.current && !formRef.current.contains(e.target)) {
-      navigate("/"); // Redirect to the home page
-    }
-  };
+  // Close the form if the user clicks outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        navigate("/");
+      }
+    };
 
-  const handleSubmit = (e) => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [navigate]);
+
+  // Handle the login functionality
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (captchaVerified) {
-      alert("Logged in successfully!");
-      // Add login logic here
-    } else {
-      alert("Please complete the reCAPTCHA verification.");
-    }
-  };
 
-  const handleCaptchaChange = (value) => {
-    setCaptchaVerified(!!value); // Check if the value is not null or empty
+    try {
+      const response = await axios.post("http://localhost:5001/api/auth/login", {
+        email,
+        password,
+      });
+
+      console.log("Login Success:", response.data);
+
+      if (response.data.success) {
+        const { role, token } = response.data;
+        login(role, token);  // Update the context with the user role and token
+        
+        // Store the token and role in localStorage if you prefer
+        localStorage.setItem("token", token);  // Store the token
+        localStorage.setItem("role", role);    // Store the user role
+
+        // Navigate based on the role
+        if (role === "admin") {
+          navigate("/admin");  // Redirect admin users to the dashboard
+        } else {
+          navigate("/");  // Redirect regular users to home
+        }
+      } else {
+        setError("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error("Login Failed:", error.message);
+      setError("Login failed. Please check your credentials.");
+    }
   };
 
   return (
     <div className="login-page">
-      {/* Render Home component in the background */}
-      <Home />
-      <div className="overlay" onClick={handleOutsideClick}>
+      <Home/>
+      <div className="overlay">
         <div className="login-form" ref={formRef}>
           <h2>Login</h2>
-          <form onSubmit={handleSubmit}>
+          {error && <p className="error">{error}</p>}
+          <form onSubmit={handleLogin}>
             <input
-              type="text"
-              placeholder="Email / Phone Number"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="form-input"
+              autoComplete="email"
             />
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               className="form-input"
+              autoComplete="current-password"
             />
-            <div className="form-options">
-              <label>
-                <input type="checkbox" />
-                Remember Me
-              </label>
-            </div>
-
-            {/* Google reCAPTCHA */}
-            <div className="recaptcha-container">
-              <ReCAPTCHA
-                sitekey="YOUR_RECAPTCHA_SITE_KEY" // Replace with your site key from Google reCAPTCHA
-                onChange={handleCaptchaChange}
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="submit-button"
-              disabled={!captchaVerified} // Disable button until reCAPTCHA is verified
-            >
+            <button type="submit" className="submit-button">
               Login
             </button>
           </form>

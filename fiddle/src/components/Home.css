@@ -1,3 +1,5 @@
+/* Home.css */
+
 /* Global styles */
 .app {
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -13,15 +15,16 @@
   color: white;
 }
 
+/* Editor container */
 .editor-container {
   display: grid;
   grid-template-columns: 1fr 1fr; /* 2 columns */
   grid-template-rows: auto auto;  /* 2 rows */
-  gap: 0px;
-  padding: 0px;
+  gap: 20px;
+  padding: 20px;
 }
 
-/* Upper row (Editor boxes) */
+/* Editor boxes */
 .editor-box {
   margin: 10px;
 }
@@ -34,49 +37,107 @@
   font-family: monospace;
   font-size: 14px;
   border: 1px solid #ddd;
+  resize: vertical; /* Allow vertical resizing */
 }
 
 .editor.dark {
-  background-color: #333;
+  background-color: #1e1e1e;
   color: white;
+  border-color: #444;
 }
 
 .editor.light {
   background-color: white;
   color: black;
+  border-color: #ccc;
 }
 
-/* Lower row (Output and buttons) */
+/* Output section */
 .output {
   width: 100%;
   height: 300px;
   border: 1px solid #ddd;
+  border-radius: 5px;
   background-color: white; /* Always white, even in dark mode */
 }
 
 .output.dark {
-  background-color: white; /* Keep output white in dark mode */
+  border-color: #444;
 }
 
 .output.light {
-  background-color: white; /* Keep output white in light mode */
+  border-color: #ccc;
 }
 
-/* Button container for Run, Download, Clear */
+/* Boilerplate heading */
+.boilerplate-heading {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Template buttons */
+.result-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.template-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.template-button:hover {
+  background-color: #0056b3;
+}
+
+/* Dark mode styles for buttons */
+.dark .template-button {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark .template-button:hover {
+  background-color: #555;
+}
+
+/* Light mode styles for buttons */
+.light .template-button {
+  background-color: rgb(231, 231, 231);
+  color: #000000;
+}
+
+.light .template-button:hover {
+  background-color: rgb(204, 204, 204)
+}
+
+/* Actions container (Run, Download, Clear) */
 .actions {
   display: flex;
   gap: 10px;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #030303;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -85,12 +146,13 @@ button:hover {
 
 /* Dark Mode Button */
 .theme-toggle {
-  background-color: #333;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .theme-toggle:hover {

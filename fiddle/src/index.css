@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.boilerplate-heading {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.result-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.template-button {
+  padding: 0.5rem 1rem;
+  color: var(--button-bg);
+  background-color: var(--text-colord);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: var(--button-bg);
+  transition: background-color 0.3s;
+}
+
+.template-button:hover {
+  background-color: var(--text-color);
+}
+
+:root {
+  --text-color: #333;
+  --button-bg: #f0f0f0;
+  --button-text: #000;
+  --button-hover-bg: #ddd;
+}
+
+.dark {
+  --text-color: #f0f0f0;
+  --button-bg: #333;
+  --button-text: #f0f0f0;
+  --button-hover-bg: #555;
+}
